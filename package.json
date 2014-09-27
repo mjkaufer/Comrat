@@ -20,5 +20,9 @@
   "bugs": {
     "url": "https://github.com/mjkaufer/comrat/issues"
   },
-  "homepage": "https://github.com/mjkaufer/comrat"
+  "homepage": "https://github.com/mjkaufer/comrat",
+  "dependencies": {
+    "express": "~4.9.5",
+    "body-parser": "~1.9.0"
+  }
 }
