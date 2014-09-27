@@ -9,6 +9,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.post('/post', function(req, res){
 	console.log(req.body);
+	console.log(req.query);
 	res.status(200);
 	res.end("Great");
 });
