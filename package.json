@@ -1,0 +1,24 @@
+{
+  "name": "comrat",
+  "version": "0.0.1",
+  "description": "Plays Borat audio locally depending on GitHub events!",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/mjkaufer/comrat"
+  },
+  "keywords": [
+    "github",
+    "audio",
+    "fun"
+  ],
+  "author": "Matthew Kaufer (@mjkaufer)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mjkaufer/comrat/issues"
+  },
+  "homepage": "https://github.com/mjkaufer/comrat"
+}
