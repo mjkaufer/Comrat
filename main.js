@@ -36,7 +36,7 @@ var events = {
 
 		var requester = body.issue.user.login;
 		var avatar = body.issue.user.avatar_url;
-		var repo = body.issue.repository.name;//funny how it's repository here and repo in the pull_request...
+		var repo = body.repository.name;//funny how it's repository here and repo in the pull_request...
 		var num = body.issue.number;
 		var action = body.action;
 
