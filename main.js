@@ -3,8 +3,11 @@ var bodyParser = require('body-parser');
 var growl = require('growl');
 var app = express();
 var port = process.env.PORT || 3000;
-var fs = require('fs');
-// var config = require('config.json');
+var ngrok = require('ngrok');
+
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: false }));
+
 var events = {
 	"push": function(body){
 		var pusher = body.pusher.name;
@@ -54,33 +57,11 @@ var events = {
 	}
 };
 
-
-
-app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({ extended: false }));
-
 app.post('/post', function(req, res){
 	var event = req.header('X-Github-Event');//name of the event
-	//we'll handle...
-	/*
-		push (push)
-		pull request (pull_request)
-		issues (issues)
-		member addition (member)
-		//maybe team addition in a bit
-		we'll add a config file too
-
-	*/
-
-	// console.log(req.body);
-	// console.log("----");
-	// console.log(event);
-
 
 	if(events[event] !== undefined)
 		events[event](req.body);//run the event if it exists
-
-
 
 	res.status(200);
 	res.end();
@@ -94,4 +75,9 @@ app.get('/', function(req, res){
 
 var server = app.listen(port, function() {
     console.log('Listening on port ' + port);
+});
+
+ngrok.connect(port, function (err, url) {
+    console.log("ngrok url");
+    console.log(url);
 });

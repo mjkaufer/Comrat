@@ -22,8 +22,9 @@
   },
   "homepage": "https://github.com/mjkaufer/comrat",
   "dependencies": {
-    "express": "~4.9.5",
     "body-parser": "~1.9.0",
-    "growl": "~1.8.1"
+    "express": "~4.9.5",
+    "growl": "~1.8.1",
+    "ngrok": "^0.1.97"
   }
 }
