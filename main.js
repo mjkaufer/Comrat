@@ -7,7 +7,7 @@ var fs = require('fs');
 var events = {
 	"push": function(body){
 		var pusher = body.pusher.name;
-		var amount = commits.length;
+		var amount = body.commits.length;
 		var repo = body.repository.name;
 		if(amount==20)//github cuts off the commits pushed to 20, so at 20, there could be more
 			amount = "20+";
