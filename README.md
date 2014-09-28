@@ -1,6 +1,6 @@
 # Comrat
 
-Originally designed to play clips from Borat whenever git-shit happened, Comrat is currently going to become a GitHub notifications dashboard for your computer!
+Comrat gives you GitHub notifications through your desktop!
 
 ## Installation
 
