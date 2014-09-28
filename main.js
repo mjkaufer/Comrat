@@ -20,8 +20,9 @@ var events = {
 	"pull_request": function(body){
 		if(action=="labeled" || action=="unlabeled" || action=="synchronize")//ones we don't care about, I hope/think
 			return;
+
 		var requester = body.pull_request.user.login;
-		var avatar = body.user.avatar_url;
+		var avatar = body.pull_request.user.avatar_url;
 		var repo = body.pull_request.repo.name;
 		var num = body.number;
 		var action = body.action;
@@ -30,6 +31,18 @@ var events = {
 
 	},
 	"issues": function(body){
+		if(action=="labeled" || action=="unlabeled")
+			return;
+
+		var requester = body.issue.user.login;
+		var avatar = body.issue.user.avatar_url;
+		var repo = body.issue.repository.name;//funny how it's repository here and repo in the pull_request...
+		var num = body.issue.number;
+		var action = body.action;
+
+		growl(requester + " just " + action + " issue #" + num + " in " + repo, {title: "Issue in " + repo, image:avatar});
+
+
 
 	},
 	"member": function(body){
