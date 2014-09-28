@@ -1,17 +1,16 @@
 var express = require('express');
-var app = express();
 var bodyParser = require('body-parser');
-
+var app = express();
 var port = process.env.PORT || 3000;
 
-app.use(bodyParser.urlencoded({ extended: true }));
-
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: false }));
 
 app.post('/post', function(req, res){
 	console.log(req.body);
-	console.log(req.query);
+
 	res.status(200);
-	res.end("Great");
+	res.end();
 });
 
 app.get('/', function(req, res){
