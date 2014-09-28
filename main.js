@@ -60,7 +60,7 @@ app.post('/post', function(req, res){
 
 
 	if(events[event] !== undefined)
-		events[event]();//run the event if it exists
+		events[event](req.body);//run the event if it exists
 
 
 
