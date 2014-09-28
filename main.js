@@ -42,10 +42,14 @@ var events = {
 
 		growl(requester + " just " + action + " issue #" + num + " in " + repo, {title: "Issue in " + repo, image:avatar});
 
-
-
 	},
 	"member": function(body){
+		var added = body.member.login;
+		var addedAvatar = body.member.avatar_url;
+		var repo = body.repository.name;
+		var adder = body.sender.login;
+
+		growl(adder + " just added " + added + " to " + repo, {title: added + " added to " + repo, image:addedAvatar});
 
 	}
 };
