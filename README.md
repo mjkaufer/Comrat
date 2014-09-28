@@ -10,6 +10,12 @@ Then, go to a GitHub repo you want to track (it currently has to be one you own)
 
 Finally, just run your node server and do some stuff on GitHub!
 
+## Screenshots
+
+Push Notification
+
+![Push Notification](http://i.imgur.com/PDaQiKw.png)
+
 ## Todo
 
 * Support for more events
