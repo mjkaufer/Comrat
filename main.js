@@ -80,4 +80,5 @@ var server = app.listen(port, function() {
 ngrok.connect(port, function (err, url) {
     console.log("ngrok url");
     console.log(url);
+    growl("Your url is " + url, {title: "Ngrok URL generated"});
 });
