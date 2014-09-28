@@ -10,6 +10,8 @@ Then, go to a GitHub repo you want to track (it currently has to be one you own)
 
 Now, with your node server running, you'll receive notifications for any of the supported events below!
 
+The ngrok URL should remain persistent for your server but, if you want a customized ngrok url or want to use your own server, simply open up `main.js` and mess with the line containing `ngrok.connect`.
+
 ## Supported Events
 
 * Pushes
