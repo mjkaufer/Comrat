@@ -14,6 +14,8 @@ Now, with your node server running, you'll receive notifications for any of the 
 
 The ngrok URL should remain persistent for your server but, if you want a customized ngrok url or want to use your own server, simply open up `main.js` and mess with the line containing `ngrok.connect`.
 
+**Make sure you've installed growl correctly!** Check out the instructions [here](https://www.npmjs.org/package/growl)!
+
 ## Supported Events
 
 * Pushes
@@ -34,5 +36,8 @@ Push Notification
 	* Listen for any URL, be it your repo or not
 * Standalone app
 	* Independent of node
+* Better ngrok persistency
+ 
+
 
 If you think you can do any of the things in the todo or have your own idea, feel free to drop a pull request!
