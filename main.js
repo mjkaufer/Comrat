@@ -1,14 +1,76 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 var growl = require('growl');
+var ngrok = require('ngrok');
+var request = require("request");
+var fs = require("fs");
 var app = express();
 var port = process.env.PORT || 3000;
-var ngrok = require('ngrok');
+var savePath = "images/";
 
+var header = {
+	"User-Agent": "IcoGrab"
+}; //universal header
+
+function mkdir(path) {
+	try {
+		fs.mkdirSync(path);
+	} catch (e) {
+		//don't do anything - folder exists.
+	}
+}
+
+function makeOptions(u) {
+	return {
+		url: u,
+		headers: header
+	};
+}
+
+function path(username) { //hassle-free way to generate the paths
+	return savePath + username + ".jpg"; //.png was breaking for some images
+}
+
+function exists(username){
+	return fs.existsSync(path(username));
+}
+
+function grabIcon(username, force, callback) { //grabs the user's icon from GitHub and saves it in an images folder, if it's not already there - force is a bool whether or not to force overwrite
+	force = force || false; //default to no force, meaning won't overwrite images if it exists already - will save time and resources, etc.
+	callback = callback || function(){};
+	if (!force && fs.existsSync(path(username))) { //if the user doesn't want to force override and the file exists
+		console.log("Image " + username + ".png exists!")
+		return; //stop doing stuff - we don't want to overwrite
+	}
+
+	var options = makeOptions("https://api.github.com/users/" + username);
+
+	var callback2 = function(error, response, body) {
+		if (!error && response.statusCode == 200) {
+			body = JSON.parse(body);
+			var avatar = body.avatar_url;
+			avatar = avatar.substring(0, avatar.indexOf("?")); //gets rid of the stuff at the end, just in case
+
+			var avOptions = makeOptions(avatar);
+
+			request(avOptions, function() {
+				console.log("Image " + path(username) + " saved");
+				callback(username);
+			}).pipe(fs.createWriteStream(path(username)));
+
+		}
+	};
+
+	request(options, callback2);
+
+}
+
+
+mkdir(savePath);
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }));
 
-var events = {
+var events = {//we'll do a non-force thing to reduce latency and the like
 	"push": function(body){
 		var pusher = body.pusher.name;
 		var amount = body.commits.length;
@@ -17,8 +79,9 @@ var events = {
 			amount = "20+";
 		var verb = amount==1 ? "commit" : "commits";
 		//todo - implement pro-pic (not returned in API call, could be done w/ JSON call but might lag :( )
-		growl(pusher + " just pushed " + amount + " " + verb + " in the repo " + repo + "!", {title: "Push in " + repo});
-
+		grabIcon(pusher, false, function(){
+			growl(pusher + " just pushed " + amount + " " + verb + " in the repo " + repo + "!", {title: "Push in " + repo, image:path(pusher)});
+		})
 	},
 	"pull_request": function(body){
 		if(action=="labeled" || action=="unlabeled" || action=="synchronize")//ones we don't care about, I hope/think
@@ -56,6 +119,11 @@ var events = {
 
 	}
 };
+
+function displayImage(){
+
+}
+
 
 app.post('/post', function(req, res){
 	var event = req.header('X-Github-Event');//name of the event
