@@ -97,7 +97,7 @@ var events = {//we'll do a non-force thing to reduce latency and the like
 		// 	growl(pusher + " just pushed " + amount + " " + verb + " in the repo " + repo + "!", {title: "Push in " + repo, image:path(pusher)});
 		// 	console.log(path(pusher))
 		// })
-		growl(pusher + " just pushed " + amount + " " + verb + " in the repo " + repo + "!", {title: "Push in " + repo, image:imgPath(pusher)});
+		growl(pusher + " just pushed " + amount + " " + verb + " in the repo " + repo + "!", {title: "Push in " + repo, image:fullPath(pusher)});
 
 	},
 	"pull_request": function(body){
