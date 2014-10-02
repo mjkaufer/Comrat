@@ -40,7 +40,7 @@ function grabIcon(username, force, callback) { //grabs the user's icon from GitH
 	callback = callback || function(){};
 	if (!force && fs.existsSync(path(username))) { //if the user doesn't want to force override and the file exists
 		console.log("Image " + username + ".jpg exists!")
-		callback(username);
+		callback(username, false);
 		return; //stop doing stuff - we don't want to overwrite
 	}
 
@@ -56,7 +56,7 @@ function grabIcon(username, force, callback) { //grabs the user's icon from GitH
 
 			request(avOptions, function() {
 				console.log("Image " + path(username) + " saved");
-				callback(username);
+				callback(username, true);
 			}).pipe(fs.createWriteStream(path(username)));
 
 		}
