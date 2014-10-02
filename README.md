@@ -23,6 +23,8 @@ The ngrok URL should remain persistent for your server but, if you want a custom
 * Issues
 * Member Additions
 
+Comrat also includes the icon of whoever triggered the event in your notification!
+
 ## Screenshots
 
 Push Notification
