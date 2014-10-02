@@ -105,12 +105,11 @@ var events = {//we'll do a non-force thing to reduce latency and the like
 			return;
 
 		var requester = body.pull_request.user.login;
-		var avatar = body.pull_request.user.avatar_url;
 		var repo = body.pull_request.repo.name;
 		var num = body.number;
 		var action = body.action;
 
-		growl(requester + " just " + action + " pull request #" + num + " in " + repo, {title: "Pull in " + repo, image:avatar});
+		growl(requester + " just " + action + " pull request #" + num + " in " + repo, {title: "Pull in " + repo, image:fullPath(requester)});
 
 	},
 	"issues": function(body){
@@ -118,21 +117,19 @@ var events = {//we'll do a non-force thing to reduce latency and the like
 			return;
 
 		var requester = body.issue.user.login;
-		var avatar = body.issue.user.avatar_url;
 		var repo = body.repository.name;//funny how it's repository here and repo in the pull_request...
 		var num = body.issue.number;
 		var action = body.action;
 
-		growl(requester + " just " + action + " issue #" + num + " in " + repo, {title: "Issue in " + repo, image:avatar});
+		growl(requester + " just " + action + " issue #" + num + " in " + repo, {title: "Issue in " + repo, image:fullPath(requester)});
 
 	},
 	"member": function(body){
 		var added = body.member.login;
-		var addedAvatar = body.member.avatar_url;
 		var repo = body.repository.name;
 		var adder = body.sender.login;
 
-		growl(adder + " just added " + added + " to " + repo, {title: added + " added to " + repo, image:addedAvatar});
+		growl(adder + " just added " + added + " to " + repo, {title: added + " added to " + repo, image:fullPath(added)});
 
 	}
 };
