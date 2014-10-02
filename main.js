@@ -39,7 +39,8 @@ function grabIcon(username, force, callback) { //grabs the user's icon from GitH
 	force = force || false; //default to no force, meaning won't overwrite images if it exists already - will save time and resources, etc.
 	callback = callback || function(){};
 	if (!force && fs.existsSync(path(username))) { //if the user doesn't want to force override and the file exists
-		console.log("Image " + username + ".png exists!")
+		console.log("Image " + username + ".jpg exists!")
+		callback(username);
 		return; //stop doing stuff - we don't want to overwrite
 	}
 
