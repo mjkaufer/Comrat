@@ -1,5 +1,6 @@
 var express = require('express');
 var bodyParser = require('body-parser');
+var path = require('path');
 var growl = require('growl');
 var ngrok = require('ngrok');
 var request = require("request");
@@ -11,6 +12,18 @@ var savePath = "images/";
 var header = {
 	"User-Agent": "IcoGrab"
 }; //universal header
+
+
+var topModule = module;
+
+while(topModule.parent)
+  topModule = topModule.parent;
+
+var appDir = path.dirname(topModule.filename);
+
+function fullPath(username){
+	return appDir + "/" +imgPath(username);
+}
 
 function mkdir(path) {
 	try {
@@ -27,18 +40,18 @@ function makeOptions(u) {
 	};
 }
 
-function path(username) { //hassle-free way to generate the paths
+function imgPath(username) { //hassle-free way to generate theimgPaths
 	return savePath + username + ".jpg"; //.png was breaking for some images
 }
 
 function exists(username){
-	return fs.existsSync(path(username));
+	return fs.existsSync(imgPath(username));
 }
 
 function grabIcon(username, force, callback) { //grabs the user's icon from GitHub and saves it in an images folder, if it's not already there - force is a bool whether or not to force overwrite
 	force = force || false; //default to no force, meaning won't overwrite images if it exists already - will save time and resources, etc.
 	callback = callback || function(){};
-	if (!force && fs.existsSync(path(username))) { //if the user doesn't want to force override and the file exists
+	if (!force && fs.existsSync(imgPath(username))) { //if the user doesn't want to force override and the file exists
 		console.log("Image " + username + ".jpg exists!")
 		callback(username, false);
 		return; //stop doing stuff - we don't want to overwrite
@@ -55,9 +68,9 @@ function grabIcon(username, force, callback) { //grabs the user's icon from GitH
 			var avOptions = makeOptions(avatar);
 
 			request(avOptions, function() {
-				console.log("Image " + path(username) + " saved");
+				console.log("Image " + imgPath(username) + " saved");
 				callback(username, true);
-			}).pipe(fs.createWriteStream(path(username)));
+			}).pipe(fs.createWriteStream(imgPath(username)));
 
 		}
 	};
@@ -84,7 +97,7 @@ var events = {//we'll do a non-force thing to reduce latency and the like
 		// 	growl(pusher + " just pushed " + amount + " " + verb + " in the repo " + repo + "!", {title: "Push in " + repo, image:path(pusher)});
 		// 	console.log(path(pusher))
 		// })
-		growl(pusher + " just pushed " + amount + " " + verb + " in the repo " + repo + "!", {title: "Push in " + repo, image:path(pusher)});
+		growl(pusher + " just pushed " + amount + " " + verb + " in the repo " + repo + "!", {title: "Push in " + repo, image:imgPath(pusher)});
 
 	},
 	"pull_request": function(body){
