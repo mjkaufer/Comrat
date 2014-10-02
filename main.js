@@ -80,9 +80,12 @@ var events = {//we'll do a non-force thing to reduce latency and the like
 			amount = "20+";
 		var verb = amount==1 ? "commit" : "commits";
 		//todo - implement pro-pic (not returned in API call, could be done w/ JSON call but might lag :( )
-		grabIcon(pusher, false, function(){
-			growl(pusher + " just pushed " + amount + " " + verb + " in the repo " + repo + "!", {title: "Push in " + repo, image:path(pusher)});
-		})
+		// grabIcon(pusher, false, function(){
+		// 	growl(pusher + " just pushed " + amount + " " + verb + " in the repo " + repo + "!", {title: "Push in " + repo, image:path(pusher)});
+		// 	console.log(path(pusher))
+		// })
+		growl(pusher + " just pushed " + amount + " " + verb + " in the repo " + repo + "!", {title: "Push in " + repo, image:path(pusher)});
+
 	},
 	"pull_request": function(body){
 		if(action=="labeled" || action=="unlabeled" || action=="synchronize")//ones we don't care about, I hope/think
@@ -151,3 +154,5 @@ ngrok.connect(port, function (err, url) {
     console.log(url);
     growl("Your url is " + url, {title: "Ngrok URL generated"});
 });
+
+// growl("Test",{image:"./"+path("mjkaufer")});
